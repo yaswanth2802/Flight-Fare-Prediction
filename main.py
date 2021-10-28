@@ -114,9 +114,9 @@ def predict():
         Airline_Trujet,Airline_Vistara,Airline_Vistara_Premium_economy,Source_Chennai,Source_Delhi,Source_Kolkata,Source_Mumbai,Destination_Cochin,Destination_Delhi,Destination_Hyderabad,Destination_Kolkata,Destination_New_Delhi]])
         output=round(prediction[0],2)
         if output<=0:
-            return render_template('index.html',prediction_texts="Sorry you cannot sell this car")
+            return render_template('index.html',prediction_text="no flight available")
         else:
-            return render_template('index.html',prediction_text="You Can Sell The Car at {}".format(output))
+            return render_template('index.html',prediction_text="Amount you have to pay is {}".format(output))
     else:
         return render_template('index.html')
 
