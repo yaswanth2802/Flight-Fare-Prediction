@@ -14,22 +14,36 @@
             <h1>FLIGHT FARE PREDICTION</h1>
             <h4>Created by YASWANTH</h4>
             <h3>Buy Year</h3>
-            <input id="first" name="Year" type="number ">
-            <h3>What is the Showroom Price?(In lakhs)</h3><br><input id="second" name="Present_Price" required="required">
-            <h3>How Many Kilometers Drived?</h3><input id="third" name="Kms_Driven" required="required">
-            <h3>How much owners previously had the car(0 or 1 or 3) ?</h3><br><input id="fourth" name="Owner" required="required">
-            <h3>What is the Fuel type?</h3><br><select name="Fuel_Type_Petrol" id="fuel" required="required">
-                <option value="Petrol">Petrol</option>
-                <option value="Diesel">Diesel</option>
-                <option value="Diesel">CNG</option>
+            <input id="first" name="Total_Stops" type="number ">
+            <h3>What is the depature time in "%H:%M" format ?</h3><br><input id="second" name="Dep_time" required="required">
+            <h3>What is the arrival time in "%H:%M" format ?</h3><input id="third" name="Arrival_time" required="required">
+            <h3>what is your Duration in "%H:%M" format ?</h3><br><input id="fourth" name="Duration_time" required="required">
+            <h3>what is your journey date in "%d/%m/%Y" format </h3><br><select name="journey_date" id="journey_date" required="required">
+            <h3>what is Airline ? </h3><br><select name="Airline" id="airline" required="required">
+                <option value="AirIndia">AirIndia</option>
+                <option value="GoAir">GoAir</option>
+                <option value="IndiGo">IndiGo</option>
+                <option value="Jet_Airways">Jet_Airways</option>
+                <option value="Jet_Airways_Business">Jet_Airways_Business</option>AirIndia</option>
+                <option value="Multiplecarriers">Multiplecarriers</option>
+                <option value="Multiple_carriers_Premium_economy">Multiple_carriers_Premium_economy</option>
+                <option value="SpiceJet">SpiceJet</option>
+                <option value="Trujet">Trujet</option>
+                <option value="Vistara">Vistara</option>
+                <option value="Vistara_Premium_economy">Vistara_Premium_economy</option>
             </select>
-            <h3>Are you A Dealer or Individual</h3><br><select name="Seller_Type_Individual" id="resea" required="required">
-                <option value="Dealer">Dealer</option>
-                <option value="Individual">Individual</option>
+            <h3>What is the start point</h3><br><select name="Source" id="source" required="required">
+                <option value="Chennai">Chennai</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Mumbai">Mumbai</option>
             </select>
-            <h3>Transmission type</h3><br><select name="Transmission_Mannual" id="research" required="required">
-                <option value="Mannual">Manual Car</option>
-                <option value="Automatic">Automatic Car</option>
+            <h3>What is the end point</h3><br><select name="Destination" id="destination" required="required">
+                <option value="Cochina">Cochina</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="New_Delhi">New_Delhi</option>
             </select>
             <br><br><button id="sub" type="submit ">Predict</button>
             <br>

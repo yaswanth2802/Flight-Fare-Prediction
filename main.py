@@ -4,8 +4,8 @@ Author: yaswanth kumar
 Date: 28- Oct - 2021
 Email: cyk12@iitbbs.ac.in
 '''
-
-
+from datetime import datetime
+import pandas as pd
 from flask import Flask, render_template, request
 #import jsonify
 import requests
@@ -13,7 +13,7 @@ import pickle
 import numpy as np
 import sklearn
 app = Flask(__name__)
-model = pickle.load(open('random_forest_regression_model1.pkl', 'rb'))
+model = pickle.load(open('random_forest_regression_model.pkl', 'rb'))
 @app.route('/',methods=['GET'])
 def Home():
     return render_template('index.html')
@@ -21,40 +21,94 @@ def Home():
 
 @app.route("/predict", methods=['POST'])
 def predict():
+    
+    Airline_AirIndia=0
+    Airline_GoAir=0
+    Airline_IndiGo=0
+    Airline_Jet_Airways=0
+    Airline_Jet_Airways_Business=0
+    Airline_Multiplecarriers=0
+    Airline_Multiple_carriers_Premium_economy=0
+    Airline_SpiceJet=0
+    Airline_Trujet=0
+    Airline_Vistara=0
+    Airline_Vistara_Premium_economy=0
+    Source_Chennai=0
+    Source_Delhi=0
+    Source_Kolkata=0
+    Source_Mumbai=0
+    Destination_Cochin=0
+    Destination_Delhi=0
+    Destination_Hyderabad=0
+    Destination_Kolkata=0
+    Destination_New_Delhi=0
+
 
     if request.method == 'POST':
+        Dep_time=str(request.form['journey_time'])
+        Arrival_time=str(request.form['journey_time'])
+        Duration_time=str(request.form['journey_time'])
+        journey_date=str(request.form['journey_date'])
         Total_Stops = int(request.form['Total_Stops'])
-        Journey_Month=int(request.form['Journey_Month'])
-        Journey_Day	=int(request.form['Journey_Day'])
-        Journey_Year=int(request.form['Journey_Year'])
-        Dep_hour=int(request.form['Dep_hour'])
-        Dep_min=int(request.form['Dep_min'])
-        Arrival_hour=int(request.form[' Arrival_hour'])
-        Arrival_min=int(request.form['Arrival_min'])
-        Duration_hour=int(request.form['Duration_hour'])
-        Duration_min=int(request.form['Duration_min'])
-        Airline_AirIndia=int(request.form[' Airline_AirIndia'])
-        Airline_GoAir=int(request.form['Airline_GoAir'])
-        Airline_IndiGo=int(request.form['Airline_IndiGo'])
-        Airline_Jet_Airways=int(request.form['Airline_Jet Airways'])
-        Airline_Jet_Airways_Business=int(request.form['Airline_Jet Airways Business'])
-        Airline_Multiplecarriers=int(request.form[' Airline_Multiple carriers'])
-        Airline_Multiple_carriers_Premium_economy=int(request.form['Airline_Multiple carriers Premium economy'])
-        Airline_SpiceJet=int(request.form['Airline_SpiceJet'])
-        Airline_Trujet=int(request.form['Airline_Trujet'])
-        Airline_Vistara=int(request.form['Airline_Vistara'])
-        Airline_Vistara_Premium_economy=int(request.form['Airline_Vistara Premium economy'])
-        Source_Chennai=int(request.form[' Source_Chennai'])
-        Source_Delhi=int(request.form['Source_Delhi'])
-        Source_Kolkata=int(request.form[' Source_Kolkata'])
-        Source_Mumbai=int(request.form['Source_Mumbai'])
-        Destination_Cochin=int(request.form['Destination_Cochin'])
-        Destination_Delhi=int(request.form['Destination_Delhi'])
-        Destination_Hyderabad=int(request.form['Destination_Hyderabad'])
-        Destination_Kolkata=int(request.form['Destination_Kolkata'])
-        Destination_New_Delhi=int(request.form['Destination_New Delhi'])
+        Journey_Month=datetime.strptime(journey_date,format = "%d/%m/%Y").dt.month
+        Journey_Day	=datetime.strptime(journey_date,format = "%d/%m/%Y").dt.day
+        Journey_Year=datetime.strptime(journey_date,format = "%d/%m/%Y").dt.year
+        Dep_hour=datetime.strptime(Dep_time,"%H:%M").dt.hour
+        Dep_min=datetime.strptime(Dep_time,"%H:%M").dt.hour
+        Arrival_hour=datetime.strptime(Arrival_time,"%H:%M").dt.min
+        Arrival_min=datetime.strptime(Arrival_time,"%H:%M").dt.min
+        Duration_hour=datetime.strptime(Duration_time,"%H:%M").dt.hour
+        Duration_min=datetime.strptime(Duration_time,"%H:%M").dt.min
+        Airline=str(request.form['Airline'])
+        Source=str(request.form['Source'])
+        Destination=str(request.form['Source'])
+
         
-            
+        if Airline=="AirIndia":
+            Airline_AirIndia=1
+        elif Airline=="GoAir":
+            Airline_GoAir=1
+        elif Airline=="IndiGo":
+            Airline_IndiGo=1
+        elif Airline=="Jet_Airways":
+            Airline_Jet_Airways=1
+        elif Airline=="Jet_Airways_Business":
+            Airline_Jet_Airways_Business=1
+        elif Airline=="Multiplecarriers":
+            Airline_Multiplecarriers=1
+        elif Airline=="Multiple_carriers_Premium_economy":
+            Airline_Multiple_carriers_Premium_economy=1
+        elif Airline=="SpiceJet":
+            Airline_SpiceJet=1
+        elif Airline=="Trujet":
+            Airline_Trujet=1
+        elif Airline=="Vistara":
+            Airline_Vistara=1
+        elif Airline=="Vistara_Premium_economy":
+            Airline_Vistara_Premium_economy=1
+
+        if Source=="Chennai":
+            Source_Chennai=1
+        elif Source=="Delhi":
+            Source_Delhi=1
+        elif Source=="Kolkata":
+            Source_Kolkata=1
+        elif Source=="Mumbai":
+            Source_Mumbai=1  
+        
+        if Destination=="Cochin":
+            Destination_Cochin=1
+        elif Destination=="Delhi":
+            Destination_Delhi=1
+        elif Destination=="Kolkata":
+            Destination_Kolkata=1
+        elif Destination=="Hyderabad":
+            Destination_Hyderabad=1  
+        elif Destination=="New_Delhi":
+            Destination_New_Delhi=1
+        
+
+
         prediction=model.predict([[Total_Stops,Journey_Month,Journey_Day,Journey_Year,Dep_hour,Dep_min,Arrival_hour,Arrival_min,Duration_hour,Duration_min,Airline_AirIndia,Airline_GoAir,Airline_IndiGo,
         Airline_Jet_Airways,Airline_Jet_Airways_Business,Airline_Multiplecarriers,Airline_Multiple_carriers_Premium_economy,Airline_SpiceJet,
         Airline_Trujet,Airline_Vistara,Airline_Vistara_Premium_economy,Source_Chennai,Source_Delhi,Source_Kolkata,Source_Mumbai,Destination_Cochin,Destination_Delhi,Destination_Hyderabad,Destination_Kolkata,Destination_New_Delhi]])
