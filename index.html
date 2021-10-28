@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Price</title>
+    <title>Flight Fare Prediction</title>
 </head>
 
 <body>
@@ -13,12 +13,12 @@
         <form action="{{ url_for('predict')}}" method="post">
             <h1>FLIGHT FARE PREDICTION</h1>
             <h4>Created by YASWANTH</h4>
-            <h3>Buy Year</h3>
+            <h3>Total stope in between</h3>
             <input id="first" name="Total_Stops" type="number ">
             <h3>What is the depature time in "%H:%M" format ?</h3><br><input id="second" name="Dep_time" required="required">
             <h3>What is the arrival time in "%H:%M" format ?</h3><input id="third" name="Arrival_time" required="required">
             <h3>what is your Duration in "%H:%M" format ?</h3><br><input id="fourth" name="Duration_time" required="required">
-            <h3>what is your journey date in "%d/%m/%Y" format </h3><br><select name="journey_date" id="journey_date" required="required">
+            <h3>what is your journey date in "%d/%m/%Y" format </h3><br><input name="journey_date" id="journey_date" required="required">
             <h3>what is Airline ? </h3><br><select name="Airline" id="airline" required="required">
                 <option value="AirIndia">AirIndia</option>
                 <option value="GoAir">GoAir</option>
@@ -49,13 +49,11 @@
             <br>
 
 
-
-
         </form>
 
 
 
-        <br><br><h3>{{ prediction_text }}<h3>
+        <br><br><h3>{{ prediction_text }}</h3>
     </div>
 
 

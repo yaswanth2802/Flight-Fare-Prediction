@@ -50,15 +50,15 @@ def predict():
         Duration_time=str(request.form['journey_time'])
         journey_date=str(request.form['journey_date'])
         Total_Stops = int(request.form['Total_Stops'])
-        Journey_Month=datetime.strptime(journey_date,format = "%d/%m/%Y").dt.month
-        Journey_Day	=datetime.strptime(journey_date,format = "%d/%m/%Y").dt.day
-        Journey_Year=datetime.strptime(journey_date,format = "%d/%m/%Y").dt.year
-        Dep_hour=datetime.strptime(Dep_time,"%H:%M").dt.hour
-        Dep_min=datetime.strptime(Dep_time,"%H:%M").dt.hour
-        Arrival_hour=datetime.strptime(Arrival_time,"%H:%M").dt.min
-        Arrival_min=datetime.strptime(Arrival_time,"%H:%M").dt.min
-        Duration_hour=datetime.strptime(Duration_time,"%H:%M").dt.hour
-        Duration_min=datetime.strptime(Duration_time,"%H:%M").dt.min
+        Journey_Month=datetime.strptime(journey_date,format = "%d/%m/%Y").month
+        Journey_Day	=datetime.strptime(journey_date,format = "%d/%m/%Y").day
+        Journey_Year=datetime.strptime(journey_date,format = "%d/%m/%Y").year
+        Dep_hour=datetime.strptime(Dep_time,"%H:%M").hour
+        Dep_min=datetime.strptime(Dep_time,"%H:%M").min
+        Arrival_hour=datetime.strptime(Arrival_time,"%H:%M").hour
+        Arrival_min=datetime.strptime(Arrival_time,"%H:%M").min
+        Duration_hour=datetime.strptime(Duration_time,"%H:%M").hour
+        Duration_min=datetime.strptime(Duration_time,"%H:%M").min
         Airline=str(request.form['Airline'])
         Source=str(request.form['Source'])
         Destination=str(request.form['Source'])
