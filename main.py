@@ -1,6 +1,6 @@
 '''
 Project: Flight Fare Prediction
-Author: yaswanth kumar
+Author: yaswanth2802
 Date: 28- Oct - 2021
 Email: cyk12@iitbbs.ac.in
 '''
