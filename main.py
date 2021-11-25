@@ -1,124 +1,166 @@
-'''
-Project: Flight Fare Prediction
-Author: yaswanth2802
-Date: 28- Oct - 2021
-Email: cyk12@iitbbs.ac.in
-'''
-from datetime import datetime
-import pandas as pd
-from flask import Flask, render_template, request
-import jsonify
-import requests
+import streamlit as st
+#from PIL import Image
 import pickle
-import numpy as np
-import sklearn
-app = Flask(__name__)
+
 model = pickle.load(open('random_forest_regression_model.pkl', 'rb'))
-@app.route('/',methods=['GET'])
-def Home():
-    return render_template('index.html')
 
 
-@app.route("/predict", methods=['POST'])
-def predict():
-    
-    Airline_AirIndia=0
-    Airline_GoAir=0
-    Airline_IndiGo=0
-    Airline_Jet_Airways=0
-    Airline_Jet_Airways_Business=0
-    Airline_Multiplecarriers=0
-    Airline_Multiple_carriers_Premium_economy=0
+def run():
+    #img1 = Image.open('flight.jpg')
+    #img1 = img1.resize((300, 200))
+    #st.image(img1, use_column_width=False)
+    st.title("Flight Price Prediction using Machine Learning")
+    st.subheader('Please Enter the following details to Predict Flight Price')
+
+
+     # ------ Airlines----------
+    Airline_Air_India =0
+    Airline_GoAir = 0
+    Airline_IndiGo = 0
+    Airline_Jet_Airways = 0
+    Airline_Jet_Airways_Business = 0
+    Airline_Multiplecarriers = 0
+    Airline_Multiplecarriers_Premiumeconomy = 0
     Airline_SpiceJet=0
     Airline_Trujet=0
-    Airline_Vistara=0
-    Airline_Vistara_Premium_economy=0
-    Source_Chennai=0
-    Source_Delhi=0
-    Source_Kolkata=0
-    Source_Mumbai=0
+    Airline_Vistara = 0
+    Airline_Vistara_Premiumeconomy = 0
+
+    # ---- Source ------------
+
+    Source_Chennai = 0
+    Source_Delhi = 0
+    Source_Kolkata = 0
+    Source_Mumbai = 0
+
+    # -------- Destination ---------
+
+    Destination_Delhi = 0
+    Destination_Hyderabad = 0
+    Destination_Kolkata = 0
+    Destination_New_Delhi =0
     Destination_Cochin=0
-    Destination_Delhi=0
-    Destination_Hyderabad=0
-    Destination_Kolkata=0
-    Destination_New_Delhi=0
+    # --------Additional Info----
+    
+    col1, col2 , col3 = st.columns(3)
 
-
-    if request.method == 'POST':
-        Dep_time=str(request.form['journey_time'])
-        Arrival_time=str(request.form['journey_time'])
-        Duration_time=str(request.form['journey_time'])
-        journey_date=str(request.form['journey_date'])
-        Total_Stops = int(request.form['Total_Stops'])
-        Journey_Month=datetime.strptime(journey_date,format = "%d/%m/%Y").month
-        Journey_Day	=datetime.strptime(journey_date,format = "%d/%m/%Y").day
-        Journey_Year=datetime.strptime(journey_date,format = "%d/%m/%Y").year
-        Dep_hour=datetime.strptime(Dep_time,"%H:%M").hour
-        Dep_min=datetime.strptime(Dep_time,"%H:%M").min
-        Arrival_hour=datetime.strptime(Arrival_time,"%H:%M").hour
-        Arrival_min=datetime.strptime(Arrival_time,"%H:%M").min
-        Duration_hour=datetime.strptime(Duration_time,"%H:%M").hour
-        Duration_min=datetime.strptime(Duration_time,"%H:%M").min
-        Airline=str(request.form['Airline'])
-        Source=str(request.form['Source'])
-        Destination=str(request.form['Source'])
-
-        
-        if Airline=="AirIndia":
-            Airline_AirIndia=1
-        elif Airline=="GoAir":
-            Airline_GoAir=1
-        elif Airline=="IndiGo":
-            Airline_IndiGo=1
-        elif Airline=="Jet_Airways":
-            Airline_Jet_Airways=1
-        elif Airline=="Jet_Airways_Business":
-            Airline_Jet_Airways_Business=1
-        elif Airline=="Multiplecarriers":
-            Airline_Multiplecarriers=1
-        elif Airline=="Multiple_carriers_Premium_economy":
-            Airline_Multiple_carriers_Premium_economy=1
-        elif Airline=="SpiceJet":
-            Airline_SpiceJet=1
-        elif Airline=="Trujet":
-            Airline_Trujet=1
-        elif Airline=="Vistara":
-            Airline_Vistara=1
-        elif Airline=="Vistara_Premium_economy":
-            Airline_Vistara_Premium_economy=1
-
-        if Source=="Chennai":
-            Source_Chennai=1
-        elif Source=="Delhi":
-            Source_Delhi=1
-        elif Source=="Kolkata":
-            Source_Kolkata=1
-        elif Source=="Mumbai":
-            Source_Mumbai=1  
-        
-        if Destination=="Cochin":
-            Destination_Cochin=1
-        elif Destination=="Delhi":
-            Destination_Delhi=1
-        elif Destination=="Kolkata":
-            Destination_Kolkata=1
-        elif Destination=="Hyderabad":
-            Destination_Hyderabad=1  
-        elif Destination=="New_Delhi":
-            Destination_New_Delhi=1
-        
-
-
-        prediction=model.predict([[Total_Stops,Journey_Month,Journey_Day,Journey_Year,Dep_hour,Dep_min,Arrival_hour,Arrival_min,Duration_hour,Duration_min,Airline_AirIndia,Airline_GoAir,Airline_IndiGo,
-        Airline_Jet_Airways,Airline_Jet_Airways_Business,Airline_Multiplecarriers,Airline_Multiple_carriers_Premium_economy,Airline_SpiceJet,
-        Airline_Trujet,Airline_Vistara,Airline_Vistara_Premium_economy,Source_Chennai,Source_Delhi,Source_Kolkata,Source_Mumbai,Destination_Cochin,Destination_Delhi,Destination_Hyderabad,Destination_Kolkata,Destination_New_Delhi]])
-        output=round(prediction[0],2)
-        if output<=0:
-            return render_template('index.html',prediction_text="no flight available")
+    with col1:
+        # Total stop
+        total_stop = 0
+        ts = st.radio('Select Number of Stops:',['Non_stop','1 stop','2 stop','3 stop','4 stop'])
+        if ts == 'Non_stop':
+            total_stop = 0
+        elif ts =='1 stop':
+            total_stop = 1
+        elif ts =='2 stop':
+            total_stop = 2
+        elif ts == '3 stop':
+            total_stop = 3
         else:
-            return render_template('index.html',prediction_text="Amount you have to pay is {}".format(output))
-    else:
-        return render_template('index.html')
+            total_stop = 4
 
-if __name__=="__main__":
-    app.run(debug=True)
+        # Journey Day
+        journey_day = st.number_input('Select Journey Date: ',min_value=1,max_value=31,value=15,step=1)
+
+        # Journey Month
+        journey_month = st.number_input('Select Journey month: ',min_value=1,max_value=12,value=6,step=1)
+
+
+
+    with col2:
+        # Dept Hour and Min
+
+        #hr = st.time_input('Enter Hour and Min for Departure:')
+        dep_hr=  st.number_input('Select departure Hour: ',min_value=1,max_value=24,value=12,step=1)
+        
+        dep_min =  st.number_input('Select departure minute: ',min_value=1,max_value=60,value=30,step=1)
+
+        # Arrival Hour and Min
+        arrival_hr= st.number_input('Select arrival Hour: ',min_value=1,max_value=24,value=12,step=1)
+        
+        arrival_min = st.number_input('Select arrival minute: ',min_value=1,max_value=60,value=30,step=1)
+        #hr2 = st.time_input('Enter Hour and Min for Arrival:')
+
+        #arrival_hr = hr2.hour
+        #arrival_min = hr2.minute
+
+        # Duration
+        dur_hr = st.slider('Enter flight duration in hours: ', 0, 100, 1)
+        dur_min = st.slider('Enter flight duration in minutes: ',0,100,1)
+
+        # Airline
+        airline_list = ['Air India','GoAir','IndiGo','Jet Airways','Jet Airways Business',
+              'Multiple carriers','Multiple carriers Premium economy','SpiceJet','Trujet','Vistara','Vistara Premium economy']
+
+        al = st.selectbox('Select Airline Details: ', airline_list)
+        if al =='Air India':
+            Airline_Air_India = 1
+        elif al == 'GoAir':
+            Airline_GoAir = 1
+        elif al == 'Indigo':
+            Airline_IndiGo = 1
+        elif al == 'Jet Airways':
+            Airline_Jet_Airways = 1
+        elif al == 'Jet Airways Business':
+            Airline_Jet_Airways_Business = 1
+        elif al == 'Multiple carriers':
+            Airline_Multiplecarriers = 1
+        elif al == 'Multiple carriers Premium economy':
+            Airline_Multiplecarriers_Premiumeconomy = 1
+        elif al == 'SpiceJet':
+            Airline_SpiceJet = 1
+        elif al == 'Trujet':
+            Airline_Trujet = 1
+        elif al == 'Vistara':
+            Airline_Vistara = 1
+        else:
+            Airline_Vistara_Premiumeconomy = 1
+
+    with col3:     # Source
+
+        source_list = ['Chennai','Delhi','Kolkata','Mumbai']
+        sr = st.selectbox('Select Source Details: ', source_list)
+        if sr == 'Chennai':
+            Source_Chennai = 1
+        elif sr == 'Delhi':
+            Source_Delhi = 1
+        elif sr == 'Kolkata':
+            Source_Kolkata = 1
+        else:
+            Source_Mumbai = 1
+
+        # Destination
+        dest_list = ['Delhi','Hyderabad','Kolkata','New Delhi','Cochin']
+        dest = st.selectbox('Select Destination Details: ', dest_list)
+        if dest == 'Delhi':
+            Destination_Delhi = 1
+        elif dest == 'Hyderabad':
+            Destination_Hyderabad = 1
+        elif dest == 'Kolkata':
+            Destination_Kolkata = 1
+        elif dest == 'Cochin':
+            Destination_Cochin= 1
+        else:
+            Destination_New_Delhi = 1
+
+         # Additional Info
+        
+       
+
+
+
+    features = [total_stop,journey_day,journey_month,dep_hr,dep_min,arrival_hr,arrival_min,dur_hr,dur_min,
+                     Airline_Air_India,Airline_GoAir,Airline_IndiGo,Airline_Jet_Airways,Airline_Jet_Airways_Business,
+                     Airline_Multiplecarriers,Airline_Multiplecarriers_Premiumeconomy,Airline_SpiceJet,Airline_Trujet,Airline_Vistara,Airline_Vistara_Premiumeconomy,
+                     Source_Chennai,Source_Delhi,Source_Kolkata,Source_Mumbai,Destination_Cochin,Destination_Delhi,Destination_Hyderabad,
+                     Destination_Kolkata,Destination_New_Delhi,]
+
+    print(features)
+
+    if st.button("Predict Flight Price"):
+        predictions = model.predict([features])[0]
+        st.success(f'The Predicted Flight Price is {predictions}')
+
+run()
+
+ #streamlit run main.py --browser.gatherUsageStats false
