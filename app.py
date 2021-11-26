@@ -1,9 +1,17 @@
 import streamlit as st
 #from PIL import Image
 import pickle
+import logging
+import os
+
+logging_str = "[%(asctime)s: %(levelname)s: %(module)s] %(message)s"
+log_dir = "logs"
+logging.basicConfig(filename= os.path.join(log_dir,"running_logs.log"),level=logging.INFO, format=logging_str, filemode="a")
+
 
 model = pickle.load(open('random_forest_regression_model.pkl', 'rb'))
-
+ 
+logging.info("*****"*10)
 
 def run():
     #img1 = Image.open('flight.jpg')
@@ -85,9 +93,10 @@ def run():
         #arrival_min = hr2.minute
 
         # Duration
-        dur_hr = st.slider('Enter flight duration in hours: ', 0, 100, 1)
-        dur_min = st.slider('Enter flight duration in minutes: ',0,100,1)
-
+        
+        dur_min = st.slider('Enter flight duration in minutes: ',1,600,1)
+        dur_hr =dur_min//60
+        dur_min=dur_min-60*dur_hr
         # Airline
         airline_list = ['Air India','GoAir','IndiGo','Jet Airways','Jet Airways Business',
               'Multiple carriers','Multiple carriers Premium economy','SpiceJet','Trujet','Vistara','Vistara Premium economy']
@@ -162,5 +171,5 @@ def run():
         st.success(f'The Predicted Flight Price is {predictions}')
 
 run()
-
- #streamlit run main.py --browser.gatherUsageStats false
+logging.info("****"*20)
+ #streamlit run app.py --browser.gatherUsageStats false
