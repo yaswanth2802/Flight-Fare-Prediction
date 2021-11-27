@@ -6,6 +6,7 @@ import os
 
 logging_str = "[%(asctime)s: %(levelname)s: %(module)s] %(message)s"
 log_dir = "logs"
+os.makedirs(log_dir, exist_ok=True)
 logging.basicConfig(filename= os.path.join(log_dir,"running_logs.log"),level=logging.INFO, format=logging_str, filemode="a")
 
 
@@ -164,10 +165,11 @@ def run():
                      Source_Chennai,Source_Delhi,Source_Kolkata,Source_Mumbai,Destination_Cochin,Destination_Delhi,Destination_Hyderabad,
                      Destination_Kolkata,Destination_New_Delhi,]
 
-    print(features)
+    logging.info(features)
 
     if st.button("Predict Flight Price"):
         predictions = model.predict([features])[0]
+        logging.info(predictions)
         st.success(f'The Predicted Flight Price is {predictions}')
 
 logging.info("*****"*10)
