@@ -79,9 +79,9 @@ def run():
         # Dept Hour and Min
 
         #hr = st.time_input('Enter Hour and Min for Departure:')
-        dep_hr=  st.number_input('Select departure Hour: ',min_value=1,max_value=24,value=12,step=1)
+        dep_hr=  st.number_input('Select departure Hour: ',min_value=0,max_value=24,value=12,step=1)
         
-        dep_min =  st.number_input('Select departure minute: ',min_value=1,max_value=60,value=30,step=1)
+        dep_min =  st.number_input('Select departure minute: ',min_value=0,max_value=60,value=30,step=1)
 
         # Arrival Hour and Min
         arrival_hr= st.number_input('Select arrival Hour: ',min_value=1,max_value=24,value=12,step=1)
@@ -170,6 +170,9 @@ def run():
         predictions = model.predict([features])[0]
         st.success(f'The Predicted Flight Price is {predictions}')
 
+logging.info("*****"*10)
+
 run()
 logging.info("****"*20)
  #streamlit run app.py --browser.gatherUsageStats false
+
