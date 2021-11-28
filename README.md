@@ -10,7 +10,7 @@ The solution is to build a machine learning algorithm that will be able to predi
 Download the dataset for custom training
 https://www.kaggle.com/ayushpandey1/flight-fare-prediction/data
 
-🖥️ Installation process---------------------------------------------------------------------------
+🖥️ Installation process----------------------------------------------------------------------------------------------------------------------------------
 
 🛠️ Requirements
 - itsdangerous
