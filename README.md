@@ -1,6 +1,6 @@
 # Flight-Fare-Prediction
 
-📝 Description---------------------------------------------------------------------------------------------------------------------------------------------------------
+📝 Description---------------------------------------------------------------------------------------------------------------------------------------------
 Traveling through flights has become an integral part of today's lifestyle as more and more people are opting for faster-traveling options. The flight ticket prices increase or decrease every now and then depending on various factors like timing of the flights, destination, and duration of flights various occasions such as vacations or festive season. Therefore, having some basic idea of the flight fares before planning the trip will surely help many people save money and time. The main goal is to predict the fares of the flights based on different factors available in the provided dataset. 
 
 The solution is to build a machine learning algorithm that will be able to predict the fare prices. We have many Regression-based algorithms like Linear Regression, Decision tree regressor, Random forest regressor, XGBRegrssor, etc. We are going to pick up only Random forest Regressor because of its good performance. But before that, we are going to preprocess the raw data provided by our client, and then the model building process and model selection by hyperparameter tuning techniques, and finally hosted the project on localhost.
