@@ -10,20 +10,21 @@ The solution is to build a machine learning algorithm that will be able to predi
 Download the dataset for custom training
 https://www.kaggle.com/ayushpandey1/flight-fare-prediction/data
 
-🖥️ Installation
+🖥️ Installation process--------------------------------------------------------------
+
 🛠️ Requirements
-itsdangerous
-Jinja2
-MarkupSafe
-Werkzeug
-numpy
-scipy
-scikit-learn
-matplotlib
-pandas
-flasgger
-streamlit
-gunicorn
+- itsdangerous
+- Jinja2
+- MarkupSafe
+- Werkzeug
+- numpy
+- scipy
+- scikit-learn
+- matplotlib
+- pandas
+- flasgger
+- streamlit
+- gunicorn
 
 🎯 Inference demo
 - fork the repository
